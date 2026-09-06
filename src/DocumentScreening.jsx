@@ -31,54 +31,42 @@ export default function DocumentScreening() {
 
     return (
         <div className="max-w-5xl mx-auto space-y-6 fade-in">
-            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
-                <h2 className="text-xl font-bold text-[#1e293b] mb-2">Neural Document Screening Node</h2>
-                <p className="text-sm text-slate-500 mb-6">Upload identity files to analyze metadata, OCR fields, and Error Level Analysis (ELA).</p>
+            <div className="bg-[#FFFFFF] rounded-2xl p-8 border border-[#E2E4E8] shadow-sm">
+                <h2 className="text-xl font-bold text-[#1A1F1D] mb-2">Neural Document Screening Node</h2>
+                <p className="text-sm text-[#5F6864] mb-6">Upload identity files to analyze metadata, OCR fields, and ELA.</p>
 
-                <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl p-10 text-center cursor-pointer hover:bg-blue-50 hover:border-blue-500 transition-all">
-                    <svg className="w-10 h-10 text-blue-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    <div className="text-base font-bold text-[#1e293b]">{file ? file.name : 'Click to Upload or Drag & Drop Document'}</div>
-                    <div className="text-xs text-slate-400 mt-1">Supports JPG, PNG, PDF up to 10MB</div>
+                <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-[#E2E4E8] bg-[#F4F5F3] rounded-xl p-10 text-center cursor-pointer hover:border-[#0F6E56] transition-all">
+                    <div className="text-base font-bold text-[#1A1F1D]">{file ? file.name : 'Click to Upload Document'}</div>
                     <input type="file" ref={fileInputRef} onChange={(e) => handleFile(e.target.files[0])} className="hidden" />
                 </div>
 
                 <div className="mt-6 flex justify-end">
-                    <button onClick={runAIScan} disabled={!file || isScanning} className={`px-8 py-3 rounded-lg font-bold text-sm text-white transition-all shadow-md ${(!file || isScanning) ? 'bg-slate-300 cursor-not-allowed shadow-none' : 'bg-blue-600 hover:bg-blue-700'}`}>
-                        {isScanning ? 'Running Neural Analysis...' : 'Process Document'}
+                    <button onClick={runAIScan} disabled={!file || isScanning} className={`px-8 py-3 rounded-lg font-bold text-sm text-white transition-all shadow-md ${(!file || isScanning) ? 'bg-[#E2E4E8] cursor-not-allowed shadow-none' : 'bg-[#0F6E56] hover:bg-[#0D5A46]'}`}>
+                        {isScanning ? 'Processing...' : 'Process Document'}
                     </button>
                 </div>
             </div>
 
             {results && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 fade-in">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
-                        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 self-start">Source Preview</h3>
-                        <div className="bg-slate-100 rounded-xl p-2 h-64 w-full flex items-center justify-center border border-slate-200">
-                            <img src={previewSrc} alt="Preview" className="max-h-full object-contain rounded" />
+                    <div className="bg-[#FFFFFF] p-6 rounded-2xl border border-[#E2E4E8] shadow-sm">
+                        <h3 className="text-sm font-bold text-[#5F6864] uppercase mb-4">Preview</h3>
+                        <div className="bg-[#F4F5F3] rounded-xl p-2 h-64 w-full flex items-center justify-center border border-[#E2E4E8]">
+                            <img src={previewSrc} className="max-h-full object-contain rounded" alt="Preview" />
                         </div>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-[#FFFFFF] p-6 rounded-2xl border border-[#E2E4E8] shadow-sm flex flex-col justify-between">
                         <div>
                             <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Analysis Report</h3>
-                                <span className="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 border border-red-200">FRAUD DETECTED</span>
-                            </div>
-                            <div className="space-y-3 mb-6">
-                                <div className="flex justify-between text-sm py-2 border-b border-slate-100">
-                                    <span className="text-slate-500 font-medium">Confidence Score</span>
-                                    <span className="font-bold text-[#1e293b]">{results.confidenceScore}</span>
-                                </div>
-                                <div className="flex justify-between text-sm py-2 border-b border-slate-100">
-                                    <span className="text-slate-500 font-medium">ELA Metadata Match</span>
-                                    <span className="font-bold text-red-600">{results.tamperingScore}</span>
-                                </div>
+                                <h3 className="text-sm font-bold text-[#5F6864] uppercase">Report</h3>
+                                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAECE7] text-[#712813]">FRAUD DETECTED</span>
                             </div>
                             <div className="space-y-2">
-                                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Extracted Data</div>
+                                <div className="text-xs font-bold text-[#5F6864] uppercase tracking-wider">Extracted Data</div>
                                 {Object.entries(results.ocrData).map(([k, v]) => (
-                                    <div key={k} className="flex justify-between text-sm bg-slate-50 px-3 py-2 rounded border border-slate-100">
-                                        <span className="text-slate-500 font-semibold">{k}</span>
-                                        <span className="text-slate-800 font-medium" dangerouslySetInnerHTML={{ __html: v.includes('(Tampered)') ? v.replace('(Tampered)', '<span class="text-red-600 font-bold ml-1 bg-red-50 px-1 rounded text-xs">(Tampered)</span>') : v }}></span>
+                                    <div key={k} className="flex justify-between text-sm bg-[#F4F5F3] px-3 py-2 rounded border border-[#E2E4E8]">
+                                        <span className="text-[#5F6864] font-semibold">{k}</span>
+                                        <span className="text-[#1A1F1D] font-medium" dangerouslySetInnerHTML={{ __html: v.includes('(Tampered)') ? v.replace('(Tampered)', '<span class="text-[#712813] font-bold ml-1 bg-[#FAECE7] px-1 rounded text-xs">(Tampered)</span>') : v }}></span>
                                     </div>
                                 ))}
                             </div>
